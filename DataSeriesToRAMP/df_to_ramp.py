@@ -44,7 +44,7 @@ def dfplot(PATH, show=1):
         plt.show()
     
 ##
-# two functions:
+# todo: two more functions:
 # 1  that returns an array of temperature values from the array of given the time data points provided.
 # 2  interpolation? based on how many data points needed (resolution of the array, but as a different function)
 ## 
