@@ -81,7 +81,6 @@ def interpolate2(time, data, name, unit="Temp[K]", step=50, show_plot=1, save_fi
     newdata = np.array([])
     newtime = np.array([])
     for i in range(0,np.size(time),step):
-        print(i, end=" ")
         newdata = np.append(newdata, np.mean(data[i:i+step]))
         newtime = np.append(newtime, time[i])
     
@@ -96,7 +95,7 @@ def disp_plot(time, data, newtime, newdata, name, unit, param, save_fig, type):
     plt.plot(time,data, label="real")
     plt.plot(newtime,newdata, "k*--", label="interpolated")
     plt.grid()
-    plt.title(f"Comparing {name} with Interpolation-{type} [steps:{param}]")
+    plt.title(f"Comparing {name} with Interpolation-{type} [steps:{param}] with {np.size(newdata)} points")
     plt.xlabel("Time[s]")
     plt.ylabel(f"{unit}")
     plt.legend()
@@ -115,12 +114,12 @@ def compare_data_size(data_original, data_modified):
     return size_old, size_new
     
 if (__name__ == "__main__"):
-    PATH1 = "https://raw.githubusercontent.com/MaCFP/matl-db/master/PMMA/Calibration_Data/NIST/NIST_DSC_N2_10K_5.csv"
+    PATH1 = "https://raw.githubusercontent.com/MaCFP/matl-db/master/PMMA/Calibration_Data/NIST/NIST_DSC_N2_10K_3.csv"
     [time, temp, mass, name, df] = url_to_arr(PATH1 ,head=1)
     dfplot(time, temp, mass, name,show_plot=0)
     
-    [new_time1, new_data1] = interpolate1(time, mass, name, unit="Mass[kg]", tolerance = 0.01, show_plot=1)
-    [new_time2, new_data2] = interpolate2(time, mass, name, unit="Mass[kg]", step = 20, show_plot=1)
+    [new_time1, new_data1] = interpolate1(time, mass, name, unit="Mass[kg]", tolerance = 0.005, show_plot=1)
+    [new_time2, new_data2] = interpolate2(time, mass, name, unit="Mass[kg]", step = 10, show_plot=1)
     
     [size_old, size_new1] = compare_data_size(time, new_time1)
     [size_old, size_new2] = compare_data_size(time, new_time2)

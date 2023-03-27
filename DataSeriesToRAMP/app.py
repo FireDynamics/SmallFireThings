@@ -7,15 +7,17 @@ PATH4 = "https://raw.githubusercontent.com/MaCFP/matl-db/master/PMMA/Calibration
 PATH5 = "https://raw.githubusercontent.com/MaCFP/matl-db/master/PMMA/Calibration_Data/NIST/NIST_DSC_N2_10K_5.csv"
 
 
-[time, temp, mass, name, df] = url_to_arr(PATH4 ,head=1)
-dfplot(time, temp, mass, name,show_plot=1, save_fig=0)
+[time, temp, mass, name, df] = url_to_arr(PATH3 ,head=1)
+# dfplot(time, temp, mass, name,show_plot=1, save_fig=0) #not necessary (just displays the plot)
 
-#tolerance parameter might have to be tweaked
+#tolerance parameter might have to be tweaked: (0.005 seems good enough)
 # for mass
-[new_time, new_data] = interpolate1(time, mass, name, unit="Mass[kg]", tolerance = 0.01, show_plot=1)
+[new_time, new_data] = interpolate1(time, mass, name, unit="Mass[kg]", 
+                                    tolerance = 0.005, show_plot=1)
 
 #for temp
-#[new_time, new_data] = interpolate_data(time, temp, name, unit="Temp[K]", tolerance = 0.01, show_plot=1)
+#[new_time, new_data] = interpolate1(time, temp, name, unit="Temp[K]", tolerance = 0.01, show_plot=1)
 
 [size_old, size_new] = compare_data_size(time, new_time)
-create_ramp(time, new_data, filename="ramp_lines.txt", initial_tau=0, final_tau=size_new)
+create_ramp(time, new_data, filename="ramp_lines.txt", initial_tau=0, 
+            final_tau=size_new)
