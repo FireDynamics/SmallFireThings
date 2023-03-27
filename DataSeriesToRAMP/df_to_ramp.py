@@ -90,12 +90,16 @@ def interpolate2(time, data, name, unit="Temp[K]", step=50, show_plot=1, save_fi
     return newtime, newdata
 
  
-def disp_plot(time, data, newtime, newdata, name, unit, param, save_fig, type):
+def disp_plot(time, data, newtime, newdata, name, unit, param_unit, save_fig, type):
     plt.clf()
     plt.plot(time,data, label="real")
     plt.plot(newtime,newdata, "k*--", label="interpolated")
     plt.grid()
-    plt.title(f"Comparing {name} with Interpolation-{type} [steps:{param}] with {np.size(newdata)} points")
+    if (type == 1):
+        param = "tol"
+    elif (type == 2):
+        param = "rng"
+    plt.title(f"Comparing {name} with Interpolation-{type} [{param}:{param_unit}] with {np.size(newdata)} points")
     plt.xlabel("Time[s]")
     plt.ylabel(f"{unit}")
     plt.legend()
