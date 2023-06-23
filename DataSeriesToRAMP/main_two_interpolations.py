@@ -1,3 +1,13 @@
+''' 
+Using interpolation methods (but with more customizability) to minimize the number of points over a given data set.
+Interpolations used:
+    - First order differences (with user provided tolerance)
+    - Average of a given range of points (with user provided range)
+    
+What is done:
+    1) The plot is divided based on the shape, so interpolation methods are applied with different tolerance values.
+    2) two-step interpolation: Average is applied first, then Differences.
+'''
 from df_to_ramp import *
 
 PATH1 = "https://raw.githubusercontent.com/MaCFP/matl-db/master/PMMA/Calibration_Data/Sandia/Sandia_TGA_Ar_50K_3.csv"

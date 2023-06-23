@@ -1,3 +1,10 @@
+''' 
+Using interpolation method to minimize the number of points over a given data set.
+Interpolations used:
+    - First order differences (with user provided tolerance)
+    - Average of a given range of points (with user provided range)
+'''
+
 from df_to_ramp import *
 
 PATH1 = "https://raw.githubusercontent.com/MaCFP/matl-db/master/PMMA/Calibration_Data/NIST/NIST_TGA_N2_10K_1.csv"
