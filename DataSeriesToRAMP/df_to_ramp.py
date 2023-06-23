@@ -57,7 +57,7 @@ def create_ramp(time, data, filename=None, ramp_id=None, initial_tau=0, final_ta
 #### INTERPOLATION ########
 
 # select the values that differ greatly from the previous data point
-def interpolate1(time, data, name, unit="Temp[K]", tolerance = 0.3, show_plot=1, save_fig=1):
+def interpolate1(time, data, name, unit="Temp[K]", tolerance = 0.3, show_plot=0, save_fig=1):
     newdata = np.array([data[0]])
     newtime = np.array([time[0]])
     diff1 = data[1] - data[0]
@@ -77,10 +77,10 @@ def interpolate1(time, data, name, unit="Temp[K]", tolerance = 0.3, show_plot=1,
     return newtime, newdata
 
 # not a good approach!    
-def interpolate2(time, data, name, unit="Temp[K]", step=50, show_plot=1, save_fig=1):
-    newdata = np.array([])
-    newtime = np.array([])
-    for i in range(0,np.size(time),step):
+def interpolate2(time, data, name, unit="Temp[K]", step=50, show_plot=0, save_fig=1):
+    newdata = np.array([data[0]])
+    newtime = np.array([time[0]])
+    for i in range(1,np.size(data),step):
         newdata = np.append(newdata, np.mean(data[i:i+step]))
         newtime = np.append(newtime, time[i])
     
@@ -90,18 +90,19 @@ def interpolate2(time, data, name, unit="Temp[K]", step=50, show_plot=1, save_fi
     return newtime, newdata
 
  
-def disp_plot(time, data, newtime, newdata, name, unit, param_unit, save_fig, type):
+def disp_plot(time, data, newtime, newdata, name, unit, param_size, save_fig, type):
     plt.clf()
-    plt.plot(time,data, label="real")
+    plt.scatter(time,data, label="real",s=1)
     plt.plot(newtime,newdata, "k*--", label="interpolated")
     plt.grid()
     if (type == 1):
         param = "tol"
     elif (type == 2):
         param = "rng"
-    plt.title(f"Comparing {name} with Interpolation-{type} [{param}:{param_unit}] with {np.size(newdata)} points")
-    plt.xlabel("Time[s]")
-    plt.ylabel(f"{unit}")
+    plt.title(f"Comparing {name} with Interpolation-{type} [{param}:{param_size}] with {np.size(newdata)} points")
+    plt.xlabel("Time[min]")
+    plt.ylabel(unit)
+    plt.tight_layout()
     plt.legend()
     if save_fig:
         plt.savefig(f"interpolated{type}_{unit}_{name}.png", dpi=500,facecolor='white', transparent=False)
@@ -116,6 +117,20 @@ def compare_data_size(data_original, data_modified):
     print(f"size of modified data set: {size_new}")
     
     return size_old, size_new
+
+### COMPOSITES ###
+def comp_avg_diff(time, mass, name, st = 3, tol = 0.005, show_plot=0):
+    # first interpolate2 (avg) then interpolate1 (diff)
+    [new_time1, new_data1] = interpolate2(time, mass, name, unit="Mass[kg]",                                    step = st, show_plot=0)
+    [new_time, new_data] = interpolate1(new_time1, new_data1, name, unit="Mass[kg]", tolerance = tol,show_plot=show_plot)
+                                    
+    return new_time, new_data
+    
+def comp_diff_avg(time, mass, name, st = 3, tol = 0.005, show_plot=0):
+    # first interpolate1 (diff) then interpolate2 (avg)
+    [new_time1, new_data1] = interpolate2(time, mass, name, unit="Mass[kg]",step = st, show_plot=0)
+    [new_time, new_data] = interpolate1(new_time1, new_data1, name, unit="Mass[kg]", tolerance = tol, show_plot=show_plot)
+
     
 if (__name__ == "__main__"):
     PATH1 = "https://raw.githubusercontent.com/MaCFP/matl-db/master/PMMA/Calibration_Data/NIST/NIST_DSC_N2_10K_3.csv"

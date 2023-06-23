@@ -1,0 +1,7 @@
+# directories to ignore
+__pycache__
+
+
+# files to ignore
+*.png
+*.txt
