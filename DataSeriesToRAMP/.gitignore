@@ -1,6 +1,6 @@
 # directories to ignore
 __pycache__
-
+PMMA_MCCTGA_A_01_L0
 
 # files to ignore
 *.png

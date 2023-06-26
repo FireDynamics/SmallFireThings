@@ -50,9 +50,28 @@ def create_ramp(time, data, filename=None, ramp_id=None, initial_tau=0, final_ta
         ramp_id = "ramp_id"
     with open(filename, "w") as f:
         for i in range(initial_tau,final_tau):
-            f.write(f"&RAMP ID='{ramp_id}', T={time[i]:.2f}, F={data[i]/np.max(data):.2f}\n")
+            f.write(f"&RAMP ID='{ramp_id}', T={time[i]:.2f}, F={data[i]/np.max(data):.2f} /\n")
 
     f.close()
+    
+def makeplot(df1,col_name="1/s.7"):
+    val = df1.columns.get_loc(col_name)
+    x = df1.iloc[:,0]
+    y = df1.iloc[:,val]
+    
+    x_name = x[0]
+    y_name = y[0]
+    
+    x_data = x[1:].values.astype(float)
+    y_data = y[1:].values.astype(float)
+    
+    plt.xlabel(f"{x_name} [{df1.columns[0]}]")
+    # plt.ylabel(f"{y_name} [{df1.columns[val]}]")
+    plt.ylabel(f"{y_name} [{col_name}]")
+    plt.title(name[:-4])
+    plt.plot(x_data,y_data)
+    plt.grid()
+    
 
 #### INTERPOLATION ########
 
@@ -90,7 +109,7 @@ def interpolate2(time, data, name, unit="Temp[K]", step=50, show_plot=0, save_fi
     return newtime, newdata
 
  
-def disp_plot(time, data, newtime, newdata, name, unit, param_size, save_fig, type):
+def disp_plot(time, data, newtime, newdata, name, unit, param_size, save_fig, type, show = False):
     plt.clf()
     plt.scatter(time,data, label="real",s=1)
     plt.plot(newtime,newdata, "k*--", label="interpolated")
@@ -106,7 +125,8 @@ def disp_plot(time, data, newtime, newdata, name, unit, param_size, save_fig, ty
     plt.legend()
     if save_fig:
         plt.savefig(f"interpolated{type}_{unit}_{name}.png", dpi=500,facecolor='white', transparent=False)
-    plt.show()
+    if show:
+        plt.show()
  
    
 def compare_data_size(data_original, data_modified):
