@@ -35,26 +35,27 @@ The approximation is done using two methods
 ## Instructions
 ### User Inputs
 
-`PATH`: location of the dataset
-`division_line`:  takes in the time (in seconds) as the location where the data is divided
-`overlap` : number of points shared between each divided part
-`tolerance` : how much difference to be accepted between data[i] and data[i+1] (different value for each divided part)
-`step`: range of points to be taken for averaging (different value for each divided part)
-`plotname` = suffix of the generated plot
-Below is an example of how the inputs are used:
+`PATH`: location of the dataset  
+`division_line`:  takes in the time (in seconds) as the location where the data is divided  
+`overlap` : number of points shared between each divided part  
+`tolerance` : how much difference to be accepted between data[i] and data[i+1] (different value for each divided part)  
+`step`: range of points to be taken for averaging (different value for each divided part)  
+`plotname` = suffix of the generated plot  
+Below is an example of how the inputs are used:  
 
-Below are examples of how these inputs are used for different cases:
-#### For multiple divisions:
-`PATH` = "DataSets/Sandia_TGA_Ar_50K_3.csv"
-`division_line` = [138.0,480.0]
-`overlap` = 2
-`tolerance` = [0.15,0.33,0.29]
-`step` = [3,22,20]
-`plotname` = f"{len(division_line)}div"
-
+Below are examples of how these inputs are used for different cases:  
+#### For multiple divisions:  
+`PATH` = "DataSets/Sandia_TGA_Ar_50K_3.csv"   
+`division_line` = [138.0,480.0]   
+`overlap` = 2   
+`tolerance` = [0.15,0.33,0.29]  
+`step` = [3,22,20]  
+`plotname` = f"{len(division_line)}div"  
+  
 #### For no (or zero) divisions:
-`PATH` = "DataSets/Sandia_TGA_Ar_50K_3.csv"
-`division_line` = [0]
-`tolerance` = [0.05]
-`step` = [30]
-`plotname` =  "0div"
+`PATH` = "DataSets/Sandia_TGA_Ar_50K_3.csv"  
+`division_line` = [0]  
+`tolerance` = [0.05]  
+`step` = [30]  
+`plotname` =  "0div"   
+  
