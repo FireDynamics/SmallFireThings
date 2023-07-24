@@ -9,10 +9,13 @@ Collection of small(-ish) scripts that might be interesting for others and have 
 
 The main purpose of this program is to
 - approximate the .csv files with experimental data
-- the approximation should be able to recreate the experimental data with 'few' data points
-- the data points are then used to create RAMP lines to be used in FDS input file.
+  - the approximation should be able to recreate the experimental data with 'few' data points
+- use the approximated data points to create RAMP lines for FDS input file.
 
-  
+### Outputs
+  - Plot comparing the original dataset with the approximated dataset.
+    - The title contains the name of the dataset with the resulting number of data points
+    - The plot also shows the location(s) where the dataset was 'divided'
 
 ### Approximation
 
@@ -32,7 +35,8 @@ The approximation is done using two methods
 
 - Additionally, the user can also choose how many points can overlap between each part using `overlap`
 
-## Instructions
+## Instructions  
+Following are the inputs that need to adjusted by the user based on the dataset.  
 ### User Inputs
 
 `PATH`: location of the dataset  
