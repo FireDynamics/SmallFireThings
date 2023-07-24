@@ -1,0 +1,8 @@
+# directories to ignore
+__pycache__
+PMMA_MCCTGA_A_01_L0
+.ipynb_checkpoints/
+
+# files to ignore
+*.png
+*.txt
